@@ -30,7 +30,6 @@
         /// <exception cref="ArgumentException">Exception thrown for an invalid country code input.</exception>
         public List<string> FindPath(string destination)
         {
-            destination = destination.ToUpper();
             // Validate the input
             if (string.IsNullOrWhiteSpace((destination)))
             {
@@ -41,6 +40,9 @@
             {
                 throw new ArgumentException($"Invalid country code {destination}");
             }
+
+            // Normalize input to the capital letters we expect in our dictionary
+            destination = destination.ToUpper();
 
             // BFS Search for desired country
             List<string> traversedCountries = new();
