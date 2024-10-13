@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PathfinderApi.Models;
+using Pathfinder.Models;
 
 namespace PathfinderApi.Controllers
 {

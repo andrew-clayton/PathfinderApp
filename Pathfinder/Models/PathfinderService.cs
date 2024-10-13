@@ -1,26 +1,23 @@
-﻿namespace PathfinderApi.Models
+﻿using Microsoft.Extensions.Options;
+
+namespace Pathfinder.Models
 {
     /// <summary>
-    /// This static class is used to find paths between countries in North America.
+    /// This class is used to find paths between countries in North America. The configuration is pulled from appsettings.json.
     /// </summary>
-    public class PathfinderService : IPathfinderService
+    /// <param name="config">This configuration determines what the adjacency list for countries are, and the starting point for a path.</param>
+    public class PathfinderService(IOptions<PathfinderConfiguration> config) : IPathfinderService
     {
-        // todo: move out to configuration
-        private readonly Dictionary<string, List<string>> AdjacencyList = new()
-        {
-            ["CAN"] = ["USA"],
-            ["USA"] = ["CAN", "MEX"],
-            ["MEX"] = ["USA", "GTM", "BLZ"],
-            ["BLZ"] = ["MEX", "GTM"],
-            ["GTM"] = ["MEX", "BLZ", "SLV", "HND"],
-            ["SLV"] = ["GTM", "HND"],
-            ["HND"] = ["GTM", "SLV", "NIC"],
-            ["NIC"] = ["HND", "CRI"],
-            ["CRI"] = ["NIC", "PAN"],
-            ["PAN"] = ["CRI"]
-        };
+        /// <summary>
+        /// This is an adjacency list, with countries as keys, and bordering countries as values.
+        /// This is how we can traverse through various countries to build our path.
+        /// </summary>
+        private readonly Dictionary<string, List<string>> _adjacencyList = config.Value.AdjacencyList; // todo: add xml comments
 
-        private static readonly string InitialCountry = "USA"; // todo: move out to configuration
+        /// <summary>
+        /// This is the starting point for any given path.
+        /// </summary>
+        private readonly string _initialCountry = config.Value.InitialCountry;
 
         /// <summary>
         /// Returns a list of strings representing the countries that must be passed through to reach a destination.
@@ -36,7 +33,7 @@
                 throw new ArgumentNullException("destination country code cannot be null or empty");
             }
 
-            if (!AdjacencyList.ContainsKey(destination))
+            if (!_adjacencyList.ContainsKey(destination))
             {
                 throw new ArgumentException($"Invalid country code {destination}");
             }
@@ -50,7 +47,7 @@
 
             // In our BFS queue, we will store the current country and the countries visited up to that point.
             Queue<(string, List<string>)> bfsQueue = new();
-            bfsQueue.Enqueue((InitialCountry, []));
+            bfsQueue.Enqueue((_initialCountry, []));
 
             // BFS
             while (bfsQueue.Count > 0)
@@ -64,7 +61,7 @@
 
                 // We have not reached the country we were looking for
                 visitedCountries.Add(currentCountry);
-                foreach (var adjacentCountry in AdjacencyList[currentCountry])
+                foreach (var adjacentCountry in _adjacencyList[currentCountry])
                 {
                     // Add each neighboring country to our queue to search (unless we have already visited it)
                     if (!visitedCountries.Contains(adjacentCountry))

@@ -1,4 +1,4 @@
-﻿namespace PathfinderApi.Models
+﻿namespace Pathfinder.Models
 {
     /// <summary>
     /// This is an interface for the PathfinderService, which could be implemented in different ways.
