@@ -1,6 +1,19 @@
 @Pathfinder_HostAddress = http://localhost:5288
-
-GET {{Pathfinder_HostAddress}}/weatherforecast/
+### Valid requests
+GET {{Pathfinder_HostAddress}}/Countries/Path/BLZ
 Accept: application/json
+
+###
+GET {{Pathfinder_HostAddress}}/Countries/Path/USA
+
+
+###
+GET {{Pathfinder_HostAddress}}/Countries/Path/usa
+
+### Invalid requests
+GET {{Pathfinder_HostAddress}}/Countries/Path/BEL
+
+###
+GET {{Pathfinder_HostAddress}}/Countries/Path/X
 
 ###

@@ -6,7 +6,7 @@ namespace Pathfinder_UnitTests
     /// This file contains unit tests for our Pathfinder class, which only has the FindPath method
     /// All units tests follow the best practices outlined here: https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices
     /// </summary>
-    public class PathfinderTests
+    public class PathfinderServiceTests
     {
         #region FindPath() Tests
         public static IEnumerable<object[]> GetPathTestData()
@@ -20,8 +20,11 @@ namespace Pathfinder_UnitTests
         [MemberData(nameof(GetPathTestData))]
         public void FindPath_CountryCode_ReturnsValidPath(string countryCode, List<string> expectedResult)
         {
+            // Arrange
+            var pathfinderSvc = new PathfinderService();
+
             // Act
-            var result = Pathfinder.FindPath(countryCode);
+            var result = pathfinderSvc.FindPath(countryCode);
 
             // Assert
             Assert.Equal(expectedResult, result);
@@ -30,15 +33,21 @@ namespace Pathfinder_UnitTests
         [Fact]
         public void FindPath_Null_ThrowsException()
         {
+            // Arrange
+            var pathfinderSvc = new PathfinderService();
+
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => Pathfinder.FindPath(null));
+            Assert.Throws<ArgumentNullException>(() => pathfinderSvc.FindPath(null));
         }
 
         [Fact]
         public void FindPath_EmptyString_ThrowsException()
         {
+            // Arrange
+            var pathfinderSvc = new PathfinderService();
+
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => Pathfinder.FindPath(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => pathfinderSvc.FindPath(string.Empty));
         }
 
         [Theory]
@@ -46,18 +55,22 @@ namespace Pathfinder_UnitTests
         [InlineData("USD")]
         public void FindPath_InvalidCountryCodes_ThrowsException(string invalidCountryCode)
         {
+            // Arrange
+            var pathfinderSvc = new PathfinderService();
+
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => Pathfinder.FindPath(invalidCountryCode));
+            Assert.Throws<ArgumentException>(() => pathfinderSvc.FindPath(invalidCountryCode));
         }
 
         [Fact]
         public void FindPath_StartPoint_ReturnsStart()
         {
             // Arrange
+            var pathfinderSvc = new PathfinderService();
             var startLocation = "USA";
 
             // Act
-            var result = Pathfinder.FindPath(startLocation);
+            var result = pathfinderSvc.FindPath(startLocation);
 
             // Assert
             Assert.Equal(1, result.Count);

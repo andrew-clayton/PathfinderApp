@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinder\PathfinderApi.csproj" />
+    <ProjectReference Include="..\Pathfinder\Pathfinder.csproj" />
   </ItemGroup>
 
   <ItemGroup>
