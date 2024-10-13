@@ -1,21 +1,12 @@
-using PathfinderApi.Models;
-
 namespace Pathfinder_UnitTests
 {
     /// <summary>
     /// This file contains unit tests for our Pathfinder class, which only has the FindPath method
     /// All units tests follow the best practices outlined here: https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices
     /// </summary>
-    public class PathfinderServiceTests
+    public class PathfinderServiceTests : PathfinderSetup
     {
         #region FindPath() Tests
-
-        public static IEnumerable<object[]> GetPathTestData()
-        {
-            yield return new object[] { "PAN", new List<string> { "USA", "MEX", "GTM", "HND", "NIC", "CRI", "PAN" } };
-            yield return new object[] { "BLZ", new List<string> { "USA", "MEX", "BLZ" } };
-            yield return new object[] { "CAN", new List<string> { "USA", "CAN" } };
-        }
 
         #region Successes
         [Theory]
@@ -23,7 +14,7 @@ namespace Pathfinder_UnitTests
         public void FindPath_CountryCode_ReturnsValidPath(string countryCode, List<string> expectedResult)
         {
             // Arrange
-            var pathfinderSvc = new PathfinderService();
+            var pathfinderSvc = GetPathfinderSvc();
 
             // Act
             var result = pathfinderSvc.FindPath(countryCode);
@@ -37,7 +28,7 @@ namespace Pathfinder_UnitTests
         public void FindPath_StartPoint_ReturnsStart()
         {
             // Arrange
-            var pathfinderSvc = new PathfinderService();
+            var pathfinderSvc = GetPathfinderSvc();
             var startLocation = "USA";
 
             // Act
@@ -56,7 +47,7 @@ namespace Pathfinder_UnitTests
         public void FindPath_Null_ThrowsException()
         {
             // Arrange
-            var pathfinderSvc = new PathfinderService();
+            var pathfinderSvc = GetPathfinderSvc();
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => pathfinderSvc.FindPath(null));
@@ -66,7 +57,7 @@ namespace Pathfinder_UnitTests
         public void FindPath_EmptyString_ThrowsException()
         {
             // Arrange
-            var pathfinderSvc = new PathfinderService();
+            var pathfinderSvc = GetPathfinderSvc();
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => pathfinderSvc.FindPath(string.Empty));
@@ -78,7 +69,7 @@ namespace Pathfinder_UnitTests
         public void FindPath_InvalidCountryCodes_ThrowsException(string invalidCountryCode)
         {
             // Arrange
-            var pathfinderSvc = new PathfinderService();
+            var pathfinderSvc = GetPathfinderSvc();
 
             // Act & Assert
             Assert.Throws<ArgumentException>(() => pathfinderSvc.FindPath(invalidCountryCode));
