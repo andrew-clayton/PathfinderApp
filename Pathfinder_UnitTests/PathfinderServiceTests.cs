@@ -9,6 +9,7 @@ namespace Pathfinder_UnitTests
     public class PathfinderServiceTests
     {
         #region FindPath() Tests
+
         public static IEnumerable<object[]> GetPathTestData()
         {
             yield return new object[] { "PAN", new List<string> { "USA", "MEX", "GTM", "HND", "NIC", "CRI", "PAN" } };
@@ -16,6 +17,7 @@ namespace Pathfinder_UnitTests
             yield return new object[] { "CAN", new List<string> { "USA", "CAN" } };
         }
 
+        #region Successes
         [Theory]
         [MemberData(nameof(GetPathTestData))]
         public void FindPath_CountryCode_ReturnsValidPath(string countryCode, List<string> expectedResult)
@@ -27,9 +29,29 @@ namespace Pathfinder_UnitTests
             var result = pathfinderSvc.FindPath(countryCode);
 
             // Assert
+            Assert.NotNull(result);
             Assert.Equal(expectedResult, result);
         }
 
+        [Fact]
+        public void FindPath_StartPoint_ReturnsStart()
+        {
+            // Arrange
+            var pathfinderSvc = new PathfinderService();
+            var startLocation = "USA";
+
+            // Act
+            var result = pathfinderSvc.FindPath(startLocation);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count);
+            Assert.Equal(["USA"], result);
+        }
+
+        #endregion
+
+        #region Exceptions
         [Fact]
         public void FindPath_Null_ThrowsException()
         {
@@ -61,21 +83,8 @@ namespace Pathfinder_UnitTests
             // Act & Assert
             Assert.Throws<ArgumentException>(() => pathfinderSvc.FindPath(invalidCountryCode));
         }
+        #endregion
 
-        [Fact]
-        public void FindPath_StartPoint_ReturnsStart()
-        {
-            // Arrange
-            var pathfinderSvc = new PathfinderService();
-            var startLocation = "USA";
-
-            // Act
-            var result = pathfinderSvc.FindPath(startLocation);
-
-            // Assert
-            Assert.Equal(1, result.Count);
-            Assert.Equal(["USA"], result);
-        }
         #endregion
     }
 }
