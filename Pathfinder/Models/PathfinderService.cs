@@ -20,12 +20,12 @@
             ["PAN"] = ["CRI"]
         };
 
-        private static readonly string InitialCountry = "USA";
+        private static readonly string InitialCountry = "USA"; // todo: move out to configuration
 
         /// <summary>
         /// Returns a list of strings representing the countries that must be passed through to reach a destination.
         /// </summary>
-        /// <param name="destination">The three-character code of a North American country to be reached.</param>
+        /// <param name="destination">3-character string of a North American country code to reach (ex: CAN).</param>
         /// <exception cref="ArgumentNullException">Exception thrown for empty/whitespace input.</exception>
         /// <exception cref="ArgumentException">Exception thrown for an invalid country code input.</exception>
         public List<string> FindPath(string destination)
@@ -75,7 +75,7 @@
             }
 
             // If we have reached this point, the BFS finished without finding our destination country.
-            throw new InvalidOperationException($"Path could not be found for country code {destination}"); // todo: use a logger
+            throw new InvalidOperationException($"Path could not be found for country code {destination}");
         }
     }
 }

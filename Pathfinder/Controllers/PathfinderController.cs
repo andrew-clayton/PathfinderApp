@@ -3,14 +3,22 @@ using PathfinderApi.Models;
 
 namespace PathfinderApi.Controllers
 {
+    /// <summary>
+    /// This is a controller for our Pathfinder API.
+    /// </summary>
+    /// <param name="pathfinderService"></param>
     [Route("/Countries")]
     [ApiController]
     public class PathfinderController(IPathfinderService pathfinderService) : ControllerBase
     {
         private readonly IPathfinderService _pathfinderSvc = pathfinderService;
-        
 
-        // We have our endpoint for request/response for the country codes
+
+        /// <summary>
+        /// This method is to map a trip to the specified destination, from a default starting point.
+        /// </summary>
+        /// <param name="countryCode">3-character string of a North American country code to reach (ex: CAN).</param>
+        /// <returns>A list of strings representing the countries that must be passed through to reach the destination, in that order.</returns>
         [HttpGet("Path/{countryCode}")]
         public IActionResult FindPath(string countryCode)
         {
