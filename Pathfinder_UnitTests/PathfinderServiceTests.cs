@@ -6,21 +6,9 @@ namespace Pathfinder_UnitTests
     /// This file contains unit tests for our Pathfinder class, which only has the FindPath method
     /// All units tests follow the best practices outlined here: https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices
     /// </summary>
-    public class PathfinderServiceTests
+    public class PathfinderServiceTests : PathfinderSetup
     {
         #region FindPath() Tests
-
-        /// <summary>
-        /// xUnit tests can use an IEnumerable to provide MemberData for a Theory.
-        /// This is data containing the destination, and the path that should be returned.
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<object[]> GetPathTestData()
-        {
-            yield return new object[] { "PAN", new List<string> { "USA", "MEX", "GTM", "HND", "NIC", "CRI", "PAN" } };
-            yield return new object[] { "BLZ", new List<string> { "USA", "MEX", "BLZ" } };
-            yield return new object[] { "CAN", new List<string> { "USA", "CAN" } };
-        }
 
         #region Successes
         [Theory]

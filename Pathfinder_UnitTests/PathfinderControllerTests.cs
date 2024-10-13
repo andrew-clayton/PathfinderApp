@@ -7,20 +7,9 @@ namespace Pathfinder_UnitTests
     /// These are similar to the unit tests for the controller, but we expect HTTP responses, and we do not expect exceptions to be thrown.
     /// Note that this is testing the business logic - these tests are currently not isolated to the controller.
     /// </summary>
-    public class PathfinderControllerTests
+    public class PathfinderControllerTests : PathfinderSetup
     {
         #region FindPath() Tests
-        /// <summary>
-        /// xUnit tests can use an IEnumerable to provide MemberData for a Theory.
-        /// This is data containing the destination, and the path that should be returned.
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<object[]> GetPathTestData() // todo: see if this can be moved to common setup
-        {
-            yield return new object[] { "PAN", new List<string> { "USA", "MEX", "GTM", "HND", "NIC", "CRI", "PAN" } };
-            yield return new object[] { "BLZ", new List<string> { "USA", "MEX", "BLZ" } };
-            yield return new object[] { "CAN", new List<string> { "USA", "CAN" } };
-        }
 
         #region Returns 200 Ok
 
