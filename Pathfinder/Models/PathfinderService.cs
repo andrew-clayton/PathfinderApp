@@ -3,10 +3,10 @@
     /// <summary>
     /// This static class is used to find paths between countries in North America.
     /// </summary>
-    public static class Pathfinder
+    public class PathfinderService : IPathfinderService
     {
         // todo: move out to configuration
-        private static readonly Dictionary<string, List<string>> AdjacencyList = new()
+        private readonly Dictionary<string, List<string>> AdjacencyList = new()
         {
             ["CAN"] = ["USA"],
             ["USA"] = ["CAN", "MEX"],
@@ -28,8 +28,9 @@
         /// <param name="destination">The three-character code of a North American country to be reached.</param>
         /// <exception cref="ArgumentNullException">Exception thrown for empty/whitespace input.</exception>
         /// <exception cref="ArgumentException">Exception thrown for an invalid country code input.</exception>
-        public static List<string> FindPath(string destination)
+        public List<string> FindPath(string destination)
         {
+            destination = destination.ToUpper();
             // Validate the input
             if (string.IsNullOrWhiteSpace((destination)))
             {
