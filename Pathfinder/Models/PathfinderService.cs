@@ -12,7 +12,7 @@ namespace Pathfinder.Models
         /// This is an adjacency list, with countries as keys, and bordering countries as values.
         /// This is how we can traverse through various countries to build our path.
         /// </summary>
-        private readonly Dictionary<string, List<string>> _adjacencyList = config.Value.AdjacencyList; // todo: add xml comments
+        private readonly Dictionary<string, List<string>> _adjacencyList = config.Value.AdjacencyList;
 
         /// <summary>
         /// This is the starting point for any given path.
@@ -30,16 +30,16 @@ namespace Pathfinder.Models
             // Validate the input
             if (string.IsNullOrWhiteSpace((destination)))
             {
-                throw new ArgumentNullException("destination country code cannot be null or empty");
+                throw new ArgumentNullException("Destination country code cannot be null or empty");
             }
+
+            // Normalize input to the capital letters we expect in our dictionary
+            destination = destination.ToUpper();
 
             if (!_adjacencyList.ContainsKey(destination))
             {
                 throw new ArgumentException($"Invalid country code {destination}");
             }
-
-            // Normalize input to the capital letters we expect in our dictionary
-            destination = destination.ToUpper();
 
             // BFS Search for desired country
             List<string> traversedCountries = new();

@@ -41,7 +41,11 @@ namespace Pathfinder_UnitTests
                 ["PAN"] = ["CRI"]
             };
 
-            var config = new PathfinderConfiguration(initialCountry, adjacencyList);
+            var config = new PathfinderConfiguration
+            {
+                InitialCountry = initialCountry,
+                AdjacencyList = adjacencyList
+            };
             return Options.Create(config);
         }
 
